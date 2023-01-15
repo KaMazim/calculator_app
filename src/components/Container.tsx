@@ -4,6 +4,8 @@ import styled from '@emotion/styled';
 
 import { ThemeContext } from '../providers/ThemeProvider';
 
+import KeyButton from './KeyButton';
+
 const StyledContainer = styled.div`
     display: flex;
     flex-direction: row;
@@ -19,13 +21,14 @@ const Container = () => {
     return (
         <StyledContainer>
             {[0, 1, 2].map((value) => (
-                <button
+                <KeyButton
+                    variant='default'
                     onClick={() => {
                         setTheme(value as 0 | 1 | 2);
                     }}
                 >
                     {value + 1}
-                </button>
+                </KeyButton>
             ))}
         </StyledContainer>
     );
