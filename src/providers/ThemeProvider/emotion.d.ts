@@ -12,16 +12,19 @@ declare module '@emotion/react' {
             key: {
                 primary: {
                     background: string;
+                    hoverBackground: string;
                     shadow: string;
                     text: string;
                 };
                 secondary: {
                     background: string;
+                    hoverBackground: string;
                     shadow: string;
                     text: string;
                 };
                 default: {
                     background: string;
+                    hoverBackground: string;
                     shadow: string;
                     text: string;
                 };
@@ -33,5 +36,7 @@ declare module '@emotion/react' {
         };
 
         transition: string;
+
+        borderRadius: string;
     }
 }

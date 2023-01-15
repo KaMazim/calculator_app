@@ -14,7 +14,11 @@ const ThemeContext = createContext({} as themeContext);
 const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
     const [theme, setTheme] = useState<0 | 1 | 2>(0);
 
-    const currentTheme: Theme = { color: colorThemes[theme], transition: 'all 0.5s ease' };
+    const currentTheme: Theme = {
+        color: colorThemes[theme],
+        transition: 'all 0.5s ease',
+        borderRadius: '8px',
+    };
 
     return (
         <ThemeContext.Provider value={{ currentTheme, setTheme }}>
