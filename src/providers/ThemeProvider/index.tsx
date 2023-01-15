@@ -16,7 +16,7 @@ const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
 
     const currentTheme: Theme = {
         color: colorThemes[theme],
-        transition: 'all 0.5s ease',
+        transition: 'all 0.3s',
         borderRadius: '8px',
     };
 
