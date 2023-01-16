@@ -3,13 +3,14 @@ import { ThemeProvider } from './providers/ThemeProvider';
 import KeyPad from './components/KeyPad';
 import Screen from './components/Screen';
 import Input from './components/Input';
-import SwitchTheme from './components/SwitchTheme';
+
+import CalcHeader from './components/CalcHeader';
 
 const App = () => {
     return (
         <ThemeProvider>
             <Screen>
-                <SwitchTheme />
+                <CalcHeader />
                 <Input>399,981</Input>
                 <KeyPad />
             </Screen>
