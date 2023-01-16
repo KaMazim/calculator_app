@@ -30,9 +30,9 @@ const Circle = styled.div<{ position: 0 | 1 | 2 }>`
         background-color: ${({ theme }) => theme.color.key.primary.hoverBackground};
     }
 
-    transition: ${({ theme }) => theme.transition};
-
     margin-left: ${({ position }) => (switchAvailableWidth / 2) * position}px;
+
+    transition: ${({ theme }) => theme.transition};
 `;
 
 const LabelWrapper = styled.div`

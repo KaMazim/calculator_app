@@ -15,7 +15,10 @@ const Screen = styled.div`
     color: ${({ theme }) => theme.color.text.primary};
     background-color: ${({ theme }) => theme.color.background.screen};
 
-    transition: ${({ theme }) => theme.transition};
+    &,
+    & > * {
+        transition: ${({ theme }) => theme.transition};
+    }
 `;
 
 export default Screen;

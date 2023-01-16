@@ -5,12 +5,15 @@ import KeyButton from '../KeyButton';
 import { divisionSign, dotSign, equalSign, minusSign, multiplySign, plusSign } from './mathSigns';
 
 const StyledKeyPad = styled.div`
-    display: grid;
-    grid-template-columns: repeat(4, minmax(60px, 101px));
-    grid-template-rows: repeat(5, 64px);
-    gap: 24px;
+    width: 100%;
+    max-width: 452px;
 
-    padding: 32px;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(60px, 90px));
+    grid-template-rows: repeat(5, 56px);
+    gap: 16px;
+
+    padding: 22px;
 
     & > *:nth-last-of-type(2) {
         grid-column: 1 / 3;
@@ -23,10 +26,9 @@ const StyledKeyPad = styled.div`
     background-color: ${({ theme }) => theme.color.background.toggle_keyPad};
     border-radius: ${({ theme }) => theme.borderRadius};
 
-    @media only screen and (max-width: 500px) {
-        grid-template-columns: repeat(4, 60px);
+    @media only screen and (max-width: 400px) {
         gap: 12px;
-        padding: 24px;
+        padding: 18px;
     }
 `;
 

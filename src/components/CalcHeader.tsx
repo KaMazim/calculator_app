@@ -3,12 +3,12 @@ import SwitchTheme from './SwitchTheme';
 
 const StyledCalcHeader = styled.header`
     width: 100%;
-    max-width: 540px;
+    max-width: 452px;
 
     display: flex;
     align-items: flex-end;
 
-    margin-bottom: 32px;
+    margin-bottom: 28px;
 `;
 
 const TextWrapper = styled.div`

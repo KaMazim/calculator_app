@@ -13,10 +13,10 @@ const KeyButton = styled.button<KeyButtonProps>`
 
     cursor: pointer;
 
-    font-size: ${({ isText }) => (isText ? '28px' : '40px')};
+    font-size: ${({ isText }) => (isText ? '22px' : '34px')};
 
-    @media only screen and (max-width: 500px) {
-        font-size: ${({ isText }) => (isText ? '20px' : '32px')};
+    @media only screen and (max-width: 400px) {
+        font-size: ${({ isText }) => (isText ? '18px' : '30px')};
     }
 
     width: 100%;
