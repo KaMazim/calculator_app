@@ -4,8 +4,8 @@ declare module '@emotion/react' {
     export interface Theme {
         color: {
             background: {
-                main: string;
-                toggleKeyPad: string;
+                input: string;
+                toggle_keyPad: string;
                 screen: string;
             };
 
