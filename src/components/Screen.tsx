@@ -12,6 +12,7 @@ const Screen = styled.div`
 
     padding: 32px 24px;
 
+    color: ${({ theme }) => theme.color.text.primary};
     background-color: ${({ theme }) => theme.color.background.screen};
 
     transition: ${({ theme }) => theme.transition};
