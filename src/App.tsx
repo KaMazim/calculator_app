@@ -1,12 +1,13 @@
-import Container from './components/Container';
-import Screen from './components/Screen';
 import { ThemeProvider } from './providers/ThemeProvider';
+
+import KeyPad from './components/KeyPad';
+import Screen from './components/Screen';
 
 const App = () => {
     return (
         <ThemeProvider>
             <Screen>
-                <Container />
+                <KeyPad />
             </Screen>
         </ThemeProvider>
     );

@@ -1,21 +1,30 @@
 import styled from '@emotion/styled';
 import { css, Theme } from '@emotion/react';
 
-const KeyButton = styled.button<{ variant: keyof Theme['color']['key'] }>`
+type KeyButtonProps = { variant: keyof Theme['color']['key']; isText: boolean };
+
+const KeyButton = styled.button<KeyButtonProps>`
     display: flex;
     justify-content: center;
     align-items: center;
 
     outline: none;
+    text-transform: uppercase;
 
     cursor: pointer;
 
-    font-size: 32px;
+    font-size: ${({ isText }) => (isText ? '28px' : '40px')};
+
+    @media only screen and (max-width: 500px) {
+        font-size: ${({ isText }) => (isText ? '20px' : '32px')};
+    }
+
+    width: 100%;
 
     border: none;
     border-radius: ${({ theme }) => theme.borderRadius};
 
-    padding: 10px 20px;
+    //padding: 10px 20px;
 
     ${({
         theme: {
@@ -38,8 +47,6 @@ const KeyButton = styled.button<{ variant: keyof Theme['color']['key'] }>`
     `}
 
     transition: ${({ theme }) => theme.transition};
-
-    position: relative;
 `;
 
 export default KeyButton;
