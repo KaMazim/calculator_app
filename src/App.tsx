@@ -1,6 +1,6 @@
 import { ThemeProvider } from './providers/ThemeProvider';
 
-import Screen from './components/Screen';
+import Screen from './components/screen';
 import Calculator from './components/calculator';
 
 const App = () => {
