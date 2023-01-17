@@ -1,71 +1,67 @@
-import styled from '@emotion/styled';
+import { FC } from 'react';
 
 import KeyButton from '../KeyButton';
 
-import { divisionSign, dotSign, equalSign, minusSign, multiplySign, plusSign } from './mathSigns';
+import { StyledKeyPad } from './keypad.styled';
 
-const StyledKeyPad = styled.div`
-    width: 100%;
-    max-width: 452px;
+import { CalcOperation, ValidNumber } from '../../hooks/useCalculator';
+import { GetLabel, GetVariant, KeyPadProps, KeyValue } from './keypad.specs';
+import { calcLabels } from '../../utils/calcLabels';
 
-    display: grid;
-    grid-template-columns: repeat(4, minmax(60px, 90px));
-    grid-template-rows: repeat(5, 56px);
-    gap: 16px;
-
-    padding: 22px;
-
-    & > *:nth-last-of-type(2) {
-        grid-column: 1 / 3;
-    }
-
-    & > *:nth-last-of-type(1) {
-        grid-column: 3 / 5;
-    }
-
-    background-color: ${({ theme }) => theme.color.background.toggle_keyPad};
-    border-radius: ${({ theme }) => theme.borderRadius};
-
-    @media only screen and (max-width: 400px) {
-        gap: 12px;
-        padding: 18px;
-    }
-`;
-
-type keyItem = {
-    value: string | number | JSX.Element;
-    variant: React.ComponentProps<typeof KeyButton>['variant'];
-};
-
-const keyItems: keyItem[] = [
-    { value: 7, variant: 'default' },
-    { value: 8, variant: 'default' },
-    { value: 9, variant: 'default' },
-    { value: 'del', variant: 'secondary' },
-    { value: 4, variant: 'default' },
-    { value: 5, variant: 'default' },
-    { value: 6, variant: 'default' },
-    { value: plusSign, variant: 'default' },
-    { value: 1, variant: 'default' },
-    { value: 2, variant: 'default' },
-    { value: 3, variant: 'default' },
-    { value: minusSign, variant: 'default' },
-    { value: dotSign, variant: 'default' },
-    { value: 0, variant: 'default' },
-    { value: divisionSign, variant: 'default' },
-    { value: multiplySign, variant: 'default' },
-    { value: 'reset', variant: 'secondary' },
-    { value: equalSign, variant: 'primary' },
+const valuesByOrder: KeyValue[] = [
+    7,
+    8,
+    9,
+    CalcOperation.Delete,
+    4,
+    5,
+    6,
+    CalcOperation.Plus,
+    1,
+    2,
+    3,
+    CalcOperation.Minus,
+    CalcOperation.Dot,
+    0,
+    CalcOperation.Divide,
+    CalcOperation.Multiply,
+    CalcOperation.Reset,
+    CalcOperation.Calculate,
 ];
 
-const KeyPad = () => {
+const getVariant: GetVariant = (value) =>
+    value === CalcOperation.Calculate
+        ? 'primary'
+        : value === CalcOperation.Delete || value === CalcOperation.Reset
+        ? 'secondary'
+        : 'default';
+
+const getLabel: GetLabel = (value) => (typeof value === 'number' ? value : calcLabels[value]);
+
+const KeyPad: FC<KeyPadProps> = ({ dispatch }) => {
     return (
         <StyledKeyPad>
-            {keyItems.map(({ value, variant }, index) => (
-                <KeyButton key={index} variant={variant} isText={typeof value === 'string'}>
-                    {value}
-                </KeyButton>
-            ))}
+            {valuesByOrder.map((value, index) => {
+                const variant = getVariant(value);
+                const label = getLabel(value);
+
+                return (
+                    <KeyButton
+                        key={index}
+                        variant={variant}
+                        isText={typeof value === 'string'}
+                        onClick={() => {
+                            if (typeof value === 'number')
+                                dispatch({ type: 'insert_number', payload: value as ValidNumber });
+                            else {
+                                dispatch({ type: value });
+                            }
+                        }}
+                    >
+                        {label}
+                    </KeyButton>
+                );
+            })}
         </StyledKeyPad>
     );
 };
