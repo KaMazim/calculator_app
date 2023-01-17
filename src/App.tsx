@@ -1,18 +1,13 @@
 import { ThemeProvider } from './providers/ThemeProvider';
 
-import KeyPad from './components/KeyPad';
 import Screen from './components/Screen';
-import Input from './components/Input';
-
-import CalcHeader from './components/CalcHeader';
+import Calculator from './components/calculator';
 
 const App = () => {
     return (
         <ThemeProvider>
             <Screen>
-                <CalcHeader />
-                <Input>399,981</Input>
-                <KeyPad />
+                <Calculator />
             </Screen>
         </ThemeProvider>
     );

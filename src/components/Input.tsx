@@ -5,7 +5,6 @@ const Input = styled.div`
     background-color: ${({ theme }) => theme.color.background.input};
 
     width: 100%;
-    max-width: 452px;
     height: 96px;
 
     padding-inline: 32px;
@@ -17,8 +16,6 @@ const Input = styled.div`
     font-size: 36px;
 
     border-radius: ${({ theme }) => theme.borderRadius};
-
-    margin-bottom: 20px;
 
     transition: ${({ theme }) => theme.transition};
 `;

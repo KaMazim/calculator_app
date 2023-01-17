@@ -1,14 +1,10 @@
 import styled from '@emotion/styled';
-import SwitchTheme from './SwitchTheme';
+import SwitchTheme from '../switchTheme';
 
 const StyledCalcHeader = styled.header`
     width: 100%;
-    max-width: 452px;
-
     display: flex;
     align-items: flex-end;
-
-    margin-bottom: 28px;
 `;
 
 const TextWrapper = styled.div`
@@ -35,7 +31,7 @@ const TextWrapper = styled.div`
     }
 `;
 
-const CalcHeader = () => {
+const CalculatorHeader = () => {
     return (
         <StyledCalcHeader>
             <TextWrapper>
@@ -48,4 +44,4 @@ const CalcHeader = () => {
     );
 };
 
-export default CalcHeader;
+export default CalculatorHeader;
