@@ -1,7 +1,7 @@
 import ReactDOMServer from 'react-dom/server';
 
 import CalculatorHeader from './calculatorHeader';
-import Input from '../Input';
+import Input from '../input';
 import KeyPad from '../keypad';
 
 import { StyledCalculator } from './calculator.styled';
@@ -14,8 +14,8 @@ const Calculator = () => {
     return (
         <StyledCalculator>
             <CalculatorHeader />
-            <Input>
-                {calculator
+            <Input
+                value={calculator
                     .map((item) => {
                         if (
                             item === CalcOperation.Plus ||
@@ -27,7 +27,8 @@ const Calculator = () => {
                         else return item;
                     })
                     .join(' ')}
-            </Input>
+                readOnly
+            />
             <KeyPad dispatch={dispatch} />
         </StyledCalculator>
     );

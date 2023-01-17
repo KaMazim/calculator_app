@@ -8,7 +8,7 @@ const StyledCalculator = styled.main`
     flex-direction: column;
     gap: 20px;
 
-    & > *:first-child {
+    & > *:first-of-type {
         margin-bottom: 8px;
     }
 `;

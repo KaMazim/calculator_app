@@ -9,6 +9,8 @@ const circleWidth = 16;
 const switchAvailableWidth = switchInnerWidth - circleWidth;
 
 const CircleWrapper = styled.div`
+    display: flex;
+
     background-color: ${({ theme }) => theme.color.background.toggle_keyPad};
 
     width: 100%;
@@ -17,16 +19,20 @@ const CircleWrapper = styled.div`
     border-radius: 13px;
 `;
 
-const Circle = styled.div<{ position: 0 | 1 | 2 }>`
+const Circle = styled.button<{ position: 0 | 1 | 2 }>`
     width: ${circleWidth}px;
     height: ${circleWidth}px;
     border-radius: 100%;
+
+    border: none;
+    outline: none;
 
     cursor: pointer;
 
     background-color: ${({ theme }) => theme.color.key.primary.background};
 
-    &:hover {
+    &:hover,
+    &:focus {
         background-color: ${({ theme }) => theme.color.key.primary.hoverBackground};
     }
 
