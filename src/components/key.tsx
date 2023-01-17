@@ -3,7 +3,7 @@ import { css, Theme } from '@emotion/react';
 
 type KeyButtonProps = { variant: keyof Theme['color']['key']; isText: boolean };
 
-const KeyButton = styled.button<KeyButtonProps>`
+const Key = styled.button<KeyButtonProps>`
     display: flex;
     justify-content: center;
     align-items: center;
@@ -49,4 +49,4 @@ const KeyButton = styled.button<KeyButtonProps>`
     transition: ${({ theme }) => theme.transition};
 `;
 
-export default KeyButton;
+export default Key;

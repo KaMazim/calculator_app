@@ -1,6 +1,6 @@
 import { FC } from 'react';
 
-import KeyButton from '../KeyButton';
+import Key from '../key';
 
 import { StyledKeyPad } from './keypad.styled';
 
@@ -46,7 +46,7 @@ const KeyPad: FC<KeyPadProps> = ({ dispatch }) => {
                 const label = getLabel(value);
 
                 return (
-                    <KeyButton
+                    <Key
                         key={index}
                         variant={variant}
                         isText={typeof value === 'string'}
@@ -59,7 +59,7 @@ const KeyPad: FC<KeyPadProps> = ({ dispatch }) => {
                         }}
                     >
                         {label}
-                    </KeyButton>
+                    </Key>
                 );
             })}
         </StyledKeyPad>
