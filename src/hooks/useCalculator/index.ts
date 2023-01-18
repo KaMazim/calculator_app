@@ -18,7 +18,7 @@ const calculatorReducer: (prevCalculator: Calc, action: CalcActions) => Calc = (
 ) =>
     produce(prevCalculator, (draft) => {
         const lastItemIndex = draft.length - 1;
-        const lastItem = !!draft.length ? draft[lastItemIndex] : '';
+        const lastItem = draft.length ? draft[lastItemIndex] : '';
         const isLastItemNumber = typeof lastItem === 'number' || isFloat(lastItem);
 
         switch (action.type) {
