@@ -1,5 +1,4 @@
-import styled from '@emotion/styled';
-import { css, Theme } from '@emotion/react';
+import styled, { css, Theme } from 'styled-components';
 
 type KeyButtonProps = { variant: keyof Theme['color']['key']; isText: boolean };
 

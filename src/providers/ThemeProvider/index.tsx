@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { ThemeProvider as EmotionThemeProvider, Theme } from '@emotion/react';
+import { ThemeProvider as StyledThemeProvider, Theme } from 'styled-components';
 
 import { useState, createContext } from 'react';
 
@@ -25,7 +25,7 @@ const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
 
     return (
         <ThemeContext.Provider value={{ currentTheme, selectedTheme, setSelectedTheme }}>
-            <EmotionThemeProvider theme={currentTheme}>{children}</EmotionThemeProvider>
+            <StyledThemeProvider theme={currentTheme}>{children}</StyledThemeProvider>
         </ThemeContext.Provider>
     );
 };

@@ -1,3 +1,5 @@
+import React from 'react';
+
 import { CalcOperation } from '../hooks/useCalculator';
 
 const plusSign = <>&#43;</>;

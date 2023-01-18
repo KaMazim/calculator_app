@@ -1,4 +1,4 @@
-import styled from '@emotion/styled';
+import styled from 'styled-components';
 
 const switchWidth = 70;
 const switchPadding = 5;

@@ -1,4 +1,4 @@
-import { Theme } from '@emotion/react';
+import { Theme } from 'styled-components';
 
 type colorTheme = Theme['color'];
 
