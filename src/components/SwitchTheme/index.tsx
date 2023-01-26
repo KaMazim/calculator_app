@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { useContext, useRef } from 'react';
 
@@ -13,6 +13,22 @@ const SwitchTheme = () => {
     const { selectedTheme, setSelectedTheme } = useContext(ThemeContext);
 
     const shouldSumRef = useRef<boolean>(getShouldSum(selectedTheme, false));
+
+    useEffect(() => {
+        const linkTag = document.querySelector("link[rel~='icon']");
+
+        if (linkTag) {
+            const linkTitle = linkTag.getAttribute('title') || '';
+            const linkCurrentTheme = Number(linkTitle.split('-')[1]) - 1;
+
+            if (linkCurrentTheme !== selectedTheme) {
+                const newTheme = `theme-${selectedTheme + 1}`;
+
+                linkTag.setAttribute('href', `/icons/${newTheme}.ico`);
+                linkTag.setAttribute('title', newTheme);
+            }
+        }
+    }, [selectedTheme]);
 
     return (
         <StyledSwitchTheme>
