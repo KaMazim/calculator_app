@@ -4,7 +4,7 @@ import { useContext, useRef } from 'react';
 
 import { ThemeContext } from '../../providers/ThemeProvider';
 
-import { CircleWrapper, Circle, LabelWrapper, StyledSwitchTheme } from './switchTheme.styled';
+import { CircleWrapper, Circle, LabelWrapper, StyledSwitchTheme } from './SwitchTheme.styled';
 
 const getShouldSum = (value: 0 | 1 | 2, prevShouldSum: boolean) =>
     value === 0 ? true : value === 2 ? false : prevShouldSum;

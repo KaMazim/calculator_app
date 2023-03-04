@@ -1,5 +1,5 @@
 import { CalcActions, CalcOperation, ValidNumber } from '../../hooks/useCalculator';
-import Key from '../key';
+import Key from '../Key';
 
 export interface KeyPadProps {
     dispatch: React.Dispatch<CalcActions>;

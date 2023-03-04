@@ -2,8 +2,8 @@ import React from 'react';
 
 import { ThemeProvider } from './providers/ThemeProvider';
 
-import Screen from './components/screen';
-import Calculator from './components/calculator';
+import Screen from './components/Screen';
+import Calculator from './components/Calculator';
 
 const App = () => {
     return (

@@ -2,11 +2,11 @@ import React from 'react';
 
 import ReactDOMServer from 'react-dom/server';
 
-import CalculatorHeader from './calculatorHeader';
-import Input from '../input';
-import KeyPad from '../keypad';
+import CalculatorHeader from './CalculatorHeader';
+import Input from '../Input';
+import KeyPad from '../KeyPad';
 
-import { StyledCalculator } from './calculator.styled';
+import { StyledCalculator } from './Calculator.styled';
 import { CalcOperation, useCalculator } from '../../hooks/useCalculator';
 import { calcLabels } from '../../utils/calcLabels';
 

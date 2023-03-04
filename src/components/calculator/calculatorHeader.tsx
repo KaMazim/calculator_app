@@ -2,7 +2,7 @@ import React from 'react';
 
 import styled from 'styled-components';
 
-import SwitchTheme from '../switchTheme';
+import SwitchTheme from '../SwitchTheme';
 
 const StyledCalcHeader = styled.header`
     width: 100%;

@@ -1,11 +1,11 @@
 import React, { FC } from 'react';
 
-import Key from '../key';
+import Key from '../Key';
 
-import { StyledKeyPad } from './keypad.styled';
+import { StyledKeyPad } from './KeyPad.styled';
 
 import { CalcOperation, ValidNumber } from '../../hooks/useCalculator';
-import { GetLabel, GetVariant, KeyPadProps, KeyValue } from './keypad.specs';
+import { GetLabel, GetVariant, KeyPadProps, KeyValue } from './KeyPad.specs';
 import { calcLabels } from '../../utils/calcLabels';
 
 const valuesByOrder: KeyValue[] = [
