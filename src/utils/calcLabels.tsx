@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { CalcOperation } from '../hooks/useCalculator';
+import { CalcOperation } from '../types/calculator';
 
 const plusSign = <>&#43;</>;
 const multiplySign = <>&#215;</>;
