@@ -4,30 +4,10 @@ import Key from '../Key';
 
 import { StyledKeyPad } from './KeyPad.styled';
 
-import { CalcOperation, ValidNumber } from '../../hooks/useCalculator';
-import { GetLabel, GetVariant, KeyPadProps, KeyValue } from './KeyPad.specs';
+import { CalcOperation, ValidNumber, ValidSign } from '../../types/calculator';
+import { GetLabel, GetVariant, KeyPadProps, KeyPadItem } from './KeyPad.specs';
 import { calcLabels } from '../../utils/calcLabels';
-
-const valuesByOrder: KeyValue[] = [
-    7,
-    8,
-    9,
-    CalcOperation.Delete,
-    4,
-    5,
-    6,
-    CalcOperation.Plus,
-    1,
-    2,
-    3,
-    CalcOperation.Minus,
-    CalcOperation.Dot,
-    0,
-    CalcOperation.Divide,
-    CalcOperation.Multiply,
-    CalcOperation.Reset,
-    CalcOperation.Calculate,
-];
+import { calculatorSlice } from '../../app/calculatorSlice';
 
 const getVariant: GetVariant = (value) =>
     value === CalcOperation.Calculate
@@ -39,9 +19,67 @@ const getVariant: GetVariant = (value) =>
 const getLabel: GetLabel = (value) => (typeof value === 'number' ? value : calcLabels[value]);
 
 const KeyPad: FC<KeyPadProps> = ({ dispatch }) => {
+    const { insertNumber, insertSign, insertDot, deleteLastDigit, clearAll, calculate } =
+        calculatorSlice.actions;
+
+    const getNumberItem = (number: ValidNumber) => ({
+        value: number,
+        action: () => {
+            return insertNumber(number);
+        },
+    });
+
+    const getSignItem = (item: ValidSign) => ({
+        value: item,
+        action: () => {
+            return insertSign(item);
+        },
+    });
+
+    const valuesByOrder: KeyPadItem[] = [
+        getNumberItem(7),
+        getNumberItem(8),
+        getNumberItem(9),
+        {
+            value: CalcOperation.Delete,
+            action: () => {
+                return deleteLastDigit();
+            },
+        },
+        getNumberItem(4),
+        getNumberItem(5),
+        getNumberItem(6),
+        getSignItem(CalcOperation.Plus),
+        getNumberItem(1),
+        getNumberItem(2),
+        getNumberItem(3),
+        getSignItem(CalcOperation.Minus),
+        {
+            value: CalcOperation.Dot,
+            action: () => {
+                return insertDot();
+            },
+        },
+        getNumberItem(0),
+        getSignItem(CalcOperation.Divide),
+        getSignItem(CalcOperation.Multiply),
+        {
+            value: CalcOperation.Reset,
+            action: () => {
+                return clearAll();
+            },
+        },
+        {
+            value: CalcOperation.Calculate,
+            action: () => {
+                return calculate();
+            },
+        },
+    ];
+
     return (
         <StyledKeyPad>
-            {valuesByOrder.map((value, index) => {
+            {valuesByOrder.map(({ value, action }, index) => {
                 const variant = getVariant(value);
                 const label = getLabel(value);
 
@@ -51,11 +89,7 @@ const KeyPad: FC<KeyPadProps> = ({ dispatch }) => {
                         variant={variant}
                         isText={typeof value === 'string'}
                         onClick={() => {
-                            if (typeof value === 'number')
-                                dispatch({ type: 'insert_number', payload: value as ValidNumber });
-                            else {
-                                dispatch({ type: value });
-                            }
+                            dispatch(action());
                         }}
                     >
                         {label}
