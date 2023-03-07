@@ -22,21 +22,4 @@ export type UnclosedDottedNumber = string;
 
 export type CalcItem = number | ValidSign | UnclosedDottedNumber;
 
-export type Calc = CalcItem[];
-
-type InsertNumberAction = { type: 'insert_number'; payload: ValidNumber };
-type InsertSignAction = { type: ValidSign };
-type InsertDotAction = { type: CalcOperation.Dot };
-
-type DeleteAction = { type: CalcOperation.Delete };
-type ResetAction = { type: CalcOperation.Reset };
-
-type CalculateAction = { type: CalcOperation.Calculate };
-
-export type CalcActions =
-    | CalculateAction
-    | InsertNumberAction
-    | InsertSignAction
-    | InsertDotAction
-    | DeleteAction
-    | ResetAction;
+export type CalcState = CalcItem[];

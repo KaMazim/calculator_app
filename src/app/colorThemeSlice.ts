@@ -1,3 +1,5 @@
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+
 import { Theme } from 'styled-components';
 
 type colorTheme = Theme['color'];
@@ -104,4 +106,23 @@ const colorThemes: colorTheme[] = [
     },
 ];
 
+const currentTheme = 0;
+
+const initialState = {
+    currentTheme,
+    colorThemes,
+};
+
 export default colorThemes;
+
+export const colorThemeSlice = createSlice({
+    name: 'colorTheme',
+    initialState,
+    reducers: {
+        setCurrentTheme: (state, action: PayloadAction<typeof initialState.currentTheme>) => {
+            const newTheme = action.payload;
+
+            if (newTheme >= 0 && newTheme < state.colorThemes.length) state.currentTheme = newTheme;
+        },
+    },
+});

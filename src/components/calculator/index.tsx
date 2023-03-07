@@ -7,11 +7,13 @@ import Input from '../Input';
 import KeyPad from '../KeyPad';
 
 import { StyledCalculator } from './Calculator.styled';
-import { CalcOperation, useCalculator } from '../../hooks/useCalculator';
 import { calcLabels } from '../../utils/calcLabels';
+import { useAppDispatch, useAppSelector } from '../../app/store';
+import { CalcOperation } from '../../types/calculator';
 
 const Calculator = () => {
-    const [calculator, dispatch] = useCalculator([]);
+    const calculator = useAppSelector((state) => state.calculator);
+    const dispatch = useAppDispatch();
 
     return (
         <StyledCalculator>

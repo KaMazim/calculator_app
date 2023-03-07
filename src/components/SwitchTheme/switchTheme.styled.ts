@@ -19,7 +19,7 @@ const CircleWrapper = styled.div`
     border-radius: 13px;
 `;
 
-const Circle = styled.button<{ position: 0 | 1 | 2 }>`
+const Circle = styled.button<{ position: number }>`
     width: ${circleWidth}px;
     height: ${circleWidth}px;
     border-radius: 100%;

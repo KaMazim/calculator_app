@@ -1,33 +1,36 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { ThemeProvider as StyledThemeProvider, Theme } from 'styled-components';
 
-import { useState, createContext } from 'react';
-
-import colorThemes from './colorThemes';
-
-type themeContext = {
-    currentTheme: Theme;
-    selectedTheme: 0 | 1 | 2;
-    setSelectedTheme: React.Dispatch<React.SetStateAction<0 | 1 | 2>>;
-};
-
-const ThemeContext = createContext({} as themeContext);
+import { useAppSelector } from '../../app/store';
 
 const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
-    const [selectedTheme, setSelectedTheme] = useState<0 | 1 | 2>(0);
+    const { colorThemes, currentTheme } = useAppSelector((state) => state.colorTheme);
 
-    const currentTheme: Theme = {
-        color: colorThemes[selectedTheme],
+    const theme: Theme = {
+        color: colorThemes[currentTheme],
         transition: 'all 0.3s',
         borderRadius: '10px',
     };
 
-    return (
-        <ThemeContext.Provider value={{ currentTheme, selectedTheme, setSelectedTheme }}>
-            <StyledThemeProvider theme={currentTheme}>{children}</StyledThemeProvider>
-        </ThemeContext.Provider>
-    );
+    // Setting icon
+    useEffect(() => {
+        const linkTag = document.querySelector("link[rel~='icon']");
+
+        if (linkTag) {
+            const linkTitle = linkTag.getAttribute('title') || '';
+            const linkCurrentTheme = Number(linkTitle.split('-')[1]) - 1;
+
+            if (linkCurrentTheme !== currentTheme) {
+                const newTheme = `theme-${currentTheme + 1}`;
+
+                linkTag.setAttribute('href', `/icons/${newTheme}.ico`);
+                linkTag.setAttribute('title', newTheme);
+            }
+        }
+    }, [currentTheme]);
+
+    return <StyledThemeProvider theme={theme}>{children}</StyledThemeProvider>;
 };
 
-export { ThemeProvider, ThemeContext };
+export { ThemeProvider };
