@@ -1,34 +1,23 @@
-import React, { useEffect } from 'react';
-
-import { useContext, useRef } from 'react';
-
-import { ThemeContext } from '../../providers/ThemeProvider';
+import React, { useEffect, useRef } from 'react';
+import { colorThemeSlice } from '../../app/colorThemeSlice';
+import { useAppDispatch, useAppSelector } from '../../app/store';
 
 import { CircleWrapper, Circle, LabelWrapper, StyledSwitchTheme } from './SwitchTheme.styled';
 
-const getShouldSum = (value: 0 | 1 | 2, prevShouldSum: boolean) =>
-    value === 0 ? true : value === 2 ? false : prevShouldSum;
-
 const SwitchTheme = () => {
-    const { selectedTheme, setSelectedTheme } = useContext(ThemeContext);
+    const { currentTheme, colorThemes } = useAppSelector((state) => state.colorTheme);
 
-    const shouldSumRef = useRef<boolean>(getShouldSum(selectedTheme, false));
+    const { setCurrentTheme } = colorThemeSlice.actions;
+    const dispatch = useAppDispatch();
+
+    const shouldSumRef = useRef<boolean>(currentTheme > 0 ? false : true);
 
     useEffect(() => {
-        const linkTag = document.querySelector("link[rel~='icon']");
+        const lastIndex = colorThemes.length - 1;
 
-        if (linkTag) {
-            const linkTitle = linkTag.getAttribute('title') || '';
-            const linkCurrentTheme = Number(linkTitle.split('-')[1]) - 1;
-
-            if (linkCurrentTheme !== selectedTheme) {
-                const newTheme = `theme-${selectedTheme + 1}`;
-
-                linkTag.setAttribute('href', `/icons/${newTheme}.ico`);
-                linkTag.setAttribute('title', newTheme);
-            }
-        }
-    }, [selectedTheme]);
+        if (currentTheme === 0) shouldSumRef.current = true;
+        else if (currentTheme === lastIndex) shouldSumRef.current = false;
+    }, [currentTheme, colorThemes]);
 
     return (
         <StyledSwitchTheme>
@@ -39,18 +28,10 @@ const SwitchTheme = () => {
             </LabelWrapper>
             <CircleWrapper>
                 <Circle
-                    position={selectedTheme}
+                    position={currentTheme}
                     onClick={() => {
-                        setSelectedTheme((prevSelectedTheme) => {
-                            shouldSumRef.current = getShouldSum(
-                                prevSelectedTheme,
-                                shouldSumRef.current
-                            );
-
-                            if (shouldSumRef.current)
-                                return (prevSelectedTheme + 1) as typeof prevSelectedTheme;
-                            else return (prevSelectedTheme - 1) as typeof prevSelectedTheme;
-                        });
+                        const newTheme = shouldSumRef.current ? currentTheme + 1 : currentTheme - 1;
+                        dispatch(setCurrentTheme(newTheme));
                     }}
                 />
             </CircleWrapper>

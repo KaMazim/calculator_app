@@ -1,10 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { TypedUseSelectorHook, useSelector, useDispatch } from 'react-redux';
+
 import { calculatorSlice } from './calculatorSlice';
+import { colorThemeSlice } from './colorThemeSlice';
 
 export const store = configureStore({
     reducer: {
         calculator: calculatorSlice.reducer,
+        colorTheme: colorThemeSlice.reducer,
     },
 });
 
