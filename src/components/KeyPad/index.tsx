@@ -5,18 +5,15 @@ import Key from '../Key';
 import { StyledKeyPad } from './KeyPad.styled';
 
 import { CalcOperation, ValidNumber, ValidSign } from '../../types/calculator';
-import { GetLabel, GetVariant, KeyPadProps, KeyPadItem } from './KeyPad.specs';
-import { calcLabels } from '../../utils/calcLabels';
+
 import { calculatorSlice } from '../../app/calculatorSlice';
+import { useAppDispatch } from '../../app/store';
 
-const getVariant: GetVariant = (value) =>
-    value === CalcOperation.Calculate
-        ? 'primary'
-        : value === CalcOperation.Delete || value === CalcOperation.Reset
-        ? 'secondary'
-        : 'default';
+import { getLabel, getVariant, KeyPadItem } from './KeyPad.util';
 
-const getLabel: GetLabel = (value) => (typeof value === 'number' ? value : calcLabels[value]);
+interface KeyPadProps {
+    dispatch: ReturnType<typeof useAppDispatch>;
+}
 
 const KeyPad: FC<KeyPadProps> = ({ dispatch }) => {
     const { insertNumber, insertSign, insertDot, deleteLastDigit, clearAll, calculate } =
