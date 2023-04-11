@@ -1,33 +1,28 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { CalcItem, CalcOperation, CalcState, ValidNumber, ValidSign } from '../types/calculator';
+import { CalculatorSign, ValidNumber, ValidSign } from '../types/calculator';
+
+type CalcItem = number | ValidSign;
+
+type CalcState = CalcItem[];
 
 const initialState: CalcState = [];
 
-const hasUnclosedDot = (value: string) => {
-    const lastChar = value.split('').pop();
-    return lastChar === CalcOperation.Dot;
-};
-
-const isFloatNumber = (value: string) => value.includes(CalcOperation.Dot);
-
-const isNumber = (item: CalcItem) => {
-    const isFloat = typeof item === 'string' && isFloatNumber(item);
-    return typeof item === 'number' || isFloat;
-};
-
 const mathSigns: ValidSign[] = [
-    CalcOperation.Multiply,
-    CalcOperation.Divide,
-    CalcOperation.Plus,
-    CalcOperation.Minus,
+    CalculatorSign.Dot,
+    CalculatorSign.Multiply,
+    CalculatorSign.Divide,
+    CalculatorSign.Plus,
+    CalculatorSign.Minus,
 ];
 
 const mathFunctions: Record<ValidSign, (firstValue: number, secondValue: number) => number> = {
-    [CalcOperation.Multiply]: (firstValue, secondValue) => firstValue * secondValue,
-    [CalcOperation.Divide]: (firstValue, secondValue) => firstValue / secondValue,
-    [CalcOperation.Plus]: (firstValue, secondValue) => firstValue + secondValue,
-    [CalcOperation.Minus]: (firstValue, secondValue) => firstValue - secondValue,
+    [CalculatorSign.Multiply]: (firstValue, secondValue) => firstValue * secondValue,
+    [CalculatorSign.Divide]: (firstValue, secondValue) => firstValue / secondValue,
+    [CalculatorSign.Plus]: (firstValue, secondValue) => firstValue + secondValue,
+    [CalculatorSign.Minus]: (firstValue, secondValue) => firstValue - secondValue,
+    [CalculatorSign.Dot]: (firstValue, secondValue) =>
+        Number(String(firstValue) + '.' + String(secondValue)),
 };
 
 const calculate = (calculator: CalcState): CalcState => {
@@ -59,35 +54,25 @@ export const calculatorSlice = createSlice({
         insertNumber: (state, action: PayloadAction<ValidNumber>) => {
             const lastItem = state[state.length - 1];
 
-            if (isNumber(lastItem)) {
+            if (typeof lastItem === 'number') {
                 const newValue = String(lastItem) + action.payload;
-                state[state.length - 1] = isFloatNumber(newValue) ? newValue : Number(newValue);
+                state[state.length - 1] = Number(newValue);
             } else state.push(action.payload);
         },
 
         insertSign: (state, action: PayloadAction<ValidSign>) => {
             const lastItem = state[state.length - 1];
-            const isUnclosedFloat = typeof lastItem === 'string' && hasUnclosedDot(lastItem);
 
-            if (state.length && isNumber(lastItem) && !isUnclosedFloat) state.push(action.payload);
-        },
-
-        insertDot: (state) => {
-            const lastItem = state[state.length - 1];
-            const hasDot = isFloatNumber(String(lastItem));
-
-            if (isNumber(lastItem) && !hasDot)
-                state[state.length - 1] = String(lastItem) + CalcOperation.Dot;
+            if (state.length && typeof lastItem === 'number') state.push(action.payload);
         },
 
         deleteLastDigit: (state) => {
             const lastItem = state[state.length - 1];
 
-            if (isNumber(lastItem)) {
+            if (typeof lastItem === 'number') {
                 const newValue = String(lastItem).slice(0, -1);
 
-                if (newValue)
-                    state[state.length - 1] = isFloatNumber(newValue) ? newValue : Number(newValue);
+                if (newValue) state[state.length - 1] = Number(newValue);
                 else state.pop();
             } else state.pop();
         },

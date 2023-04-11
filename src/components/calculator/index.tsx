@@ -1,36 +1,30 @@
 import React from 'react';
 
-import ReactDOMServer from 'react-dom/server';
-
 import CalculatorHeader from './CalculatorHeader';
 import Input from '../Input';
 import KeyPad from '../KeyPad';
 
 import { StyledCalculator } from './Calculator.styled';
-import { calcLabels } from '../../utils/calcLabels';
 import { useAppDispatch, useAppSelector } from '../../app/store';
-import { CalcOperation } from '../../types/calculator';
+import { calculatorLabels, getLabel } from '../../utils/label';
+import { CalculatorSign } from '../../types/calculator';
 
 const Calculator = () => {
     const calculator = useAppSelector((state) => state.calculator);
     const dispatch = useAppDispatch();
 
+    const dotLabel = calculatorLabels[CalculatorSign.Dot];
+
+    const items = calculator.map((item) => getLabel(item));
+
     return (
         <StyledCalculator>
             <CalculatorHeader />
             <Input
-                value={calculator
-                    .map((item) => {
-                        if (
-                            item === CalcOperation.Plus ||
-                            item === CalcOperation.Minus ||
-                            item === CalcOperation.Divide ||
-                            item === CalcOperation.Multiply
-                        )
-                            return ReactDOMServer.renderToString(calcLabels[item]);
-                        else return item;
-                    })
-                    .join(' ')}
+                value={items
+                    .join(' ')
+                    .replaceAll(` ${dotLabel}`, dotLabel)
+                    .replaceAll(`${dotLabel} `, dotLabel)}
                 readOnly
             />
             <KeyPad dispatch={dispatch} />

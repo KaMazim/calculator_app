@@ -1,28 +1,68 @@
-import { calcLabels } from '../../utils/calcLabels';
+import { getLabel } from '../../utils/label';
 
-import { CalcOperation, ValidNumber } from '../../types/calculator';
+import { CalculatorOperation, CalculatorSign, ValidInput } from '../../types/calculator';
 
 import { calculatorSlice } from '../../app/calculatorSlice';
 
-import Key from '../Key';
+import type { KeyProps } from '../Key';
 
-export type KeyPadItem = {
-    value: ValidNumber | CalcOperation;
-    action: () => ReturnType<calculatorAction>;
-};
+const { insertNumber, insertSign, deleteLastDigit, clearAll, calculate } = calculatorSlice.actions;
 
 type calculatorAction = typeof calculatorSlice.actions[keyof typeof calculatorSlice.actions];
 
-type GetVariant = (value: KeyPadItem['value']) => React.ComponentProps<typeof Key>['variant'];
+export interface KeyPadItem {
+    value: ValidInput;
+    label: string;
+    variant: KeyProps['variant'];
+    action: ReturnType<calculatorAction>;
+}
 
-type GetLabel = (value: KeyPadItem['value']) => KeyPadItem['value'] | string | JSX.Element;
+export const getKeyPadItem = (value: KeyPadItem['value']): KeyPadItem => {
+    return {
+        value: value,
+        label: getLabel(value),
+        variant: getKeyVariant(value),
+        action: getKeyAction(value),
+    };
+};
 
-export const getVariant: GetVariant = (value) =>
-    value === CalcOperation.Calculate
-        ? 'primary'
-        : value === CalcOperation.Delete || value === CalcOperation.Reset
-        ? 'secondary'
-        : 'default';
+export const getKeyVariant = (value: KeyPadItem['value']): KeyProps['variant'] => {
+    switch (value) {
+        case CalculatorOperation.Calculate: {
+            return 'primary';
+        }
 
-export const getLabel: GetLabel = (value) =>
-    typeof value === 'number' ? value : calcLabels[value];
+        case CalculatorOperation.Delete:
+        case CalculatorOperation.Reset: {
+            return 'secondary';
+        }
+
+        default: {
+            return 'default';
+        }
+    }
+};
+
+const getKeyAction = (value: KeyPadItem['value']): KeyPadItem['action'] => {
+    if (typeof value === 'number') return insertNumber(value);
+
+    switch (value) {
+        case CalculatorSign.Plus:
+        case CalculatorSign.Minus:
+        case CalculatorSign.Multiply:
+        case CalculatorSign.Divide:
+        case CalculatorSign.Dot: {
+            return insertSign(value);
+        }
+
+        case CalculatorOperation.Calculate: {
+            return calculate();
+        }
+        case CalculatorOperation.Delete: {
+            return deleteLastDigit();
+        }
+        case CalculatorOperation.Reset: {
+            return clearAll();
+        }
+    }
+};

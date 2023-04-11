@@ -1,8 +1,8 @@
 import styled, { css, Theme } from 'styled-components';
 
-type KeyButtonProps = { variant: keyof Theme['color']['key']; isText: boolean };
+export type KeyProps = { variant: keyof Theme['color']['key']; isText: boolean };
 
-const Key = styled.button<KeyButtonProps>`
+const Key = styled.button<KeyProps>`
     display: flex;
     justify-content: center;
     align-items: center;
