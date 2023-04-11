@@ -1,6 +1,10 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 
-import { CalculatorSign, ValidNumber, ValidSign } from '../types/calculator';
+import {
+    CalculatorSign,
+    type ValidNumber,
+    type ValidSign
+} from '../types/calculator';
 
 type CalcItem = number | ValidSign;
 
@@ -13,23 +17,32 @@ const mathSigns: ValidSign[] = [
     CalculatorSign.Multiply,
     CalculatorSign.Divide,
     CalculatorSign.Plus,
-    CalculatorSign.Minus,
+    CalculatorSign.Minus
 ];
 
-const mathFunctions: Record<ValidSign, (firstValue: number, secondValue: number) => number> = {
-    [CalculatorSign.Multiply]: (firstValue, secondValue) => firstValue * secondValue,
-    [CalculatorSign.Divide]: (firstValue, secondValue) => firstValue / secondValue,
-    [CalculatorSign.Plus]: (firstValue, secondValue) => firstValue + secondValue,
-    [CalculatorSign.Minus]: (firstValue, secondValue) => firstValue - secondValue,
+const mathFunctions: Record<
+    ValidSign,
+    (firstValue: number, secondValue: number) => number
+> = {
+    [CalculatorSign.Multiply]: (firstValue, secondValue) =>
+        firstValue * secondValue,
+    [CalculatorSign.Divide]: (firstValue, secondValue) =>
+        firstValue / secondValue,
+    [CalculatorSign.Plus]: (firstValue, secondValue) =>
+        firstValue + secondValue,
+    [CalculatorSign.Minus]: (firstValue, secondValue) =>
+        firstValue - secondValue,
     [CalculatorSign.Dot]: (firstValue, secondValue) =>
-        Number(String(firstValue) + '.' + String(secondValue)),
+        Number(String(firstValue) + '.' + String(secondValue))
 };
 
 const calculate = (calculator: CalcState): CalcState => {
     return mathSigns.reduce((calculatorBySign, currentSign) => {
         return calculatorBySign.reduce((currentCalculator, item, index) => {
             if (item === currentSign) {
-                const itemIndex = index - (calculatorBySign.length - currentCalculator.length);
+                const itemIndex =
+                    index -
+                    (calculatorBySign.length - currentCalculator.length);
 
                 const firstIndex = itemIndex - 1;
                 const secondIndex = itemIndex + 1;
@@ -37,11 +50,18 @@ const calculate = (calculator: CalcState): CalcState => {
                 const firstValue = Number(currentCalculator[firstIndex]);
                 const secondValue = Number(currentCalculator[secondIndex]);
 
-                const newValue = mathFunctions[currentSign](firstValue, secondValue);
+                const newValue = mathFunctions[currentSign](
+                    firstValue,
+                    secondValue
+                );
 
                 return currentCalculator
-                    .map((value, index) => (itemIndex === index ? newValue : value))
-                    .filter((_, index) => ![firstIndex, secondIndex].includes(index));
+                    .map((value, index) =>
+                        itemIndex === index ? newValue : value
+                    )
+                    .filter(
+                        (_, index) => ![firstIndex, secondIndex].includes(index)
+                    );
             } else return currentCalculator;
         }, calculatorBySign);
     }, calculator);
@@ -55,7 +75,7 @@ export const calculatorSlice = createSlice({
             const lastItem = state[state.length - 1];
 
             if (typeof lastItem === 'number') {
-                const newValue = String(lastItem) + action.payload;
+                const newValue = String(lastItem) + String(action.payload);
                 state[state.length - 1] = Number(newValue);
             } else state.push(action.payload);
         },
@@ -63,7 +83,8 @@ export const calculatorSlice = createSlice({
         insertSign: (state, action: PayloadAction<ValidSign>) => {
             const lastItem = state[state.length - 1];
 
-            if (state.length && typeof lastItem === 'number') state.push(action.payload);
+            if (state.length > 0 && typeof lastItem === 'number')
+                state.push(action.payload);
         },
 
         deleteLastDigit: (state) => {
@@ -72,7 +93,8 @@ export const calculatorSlice = createSlice({
             if (typeof lastItem === 'number') {
                 const newValue = String(lastItem).slice(0, -1);
 
-                if (newValue) state[state.length - 1] = Number(newValue);
+                if (newValue.length > 0)
+                    state[state.length - 1] = Number(newValue);
                 else state.pop();
             } else state.pop();
         },
@@ -83,6 +105,6 @@ export const calculatorSlice = createSlice({
 
         calculate: (state) => {
             return calculate(state);
-        },
-    },
+        }
+    }
 });

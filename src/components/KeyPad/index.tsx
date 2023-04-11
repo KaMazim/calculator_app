@@ -1,12 +1,12 @@
-import React, { FC } from 'react';
+import React from 'react';
 
 import Key from '../Key';
 
 import { StyledKeyPad } from './KeyPad.styled';
 
-import { useAppDispatch } from '../../app/store';
+import type { useAppDispatch } from '../../app/store';
 
-import { getKeyPadItem, KeyPadItem } from './KeyPad.util';
+import { getKeyPadItem, type KeyPadItem } from './KeyPad.util';
 import { CalculatorOperation, CalculatorSign } from '../../types/calculator';
 
 interface KeyPadProps {
@@ -16,7 +16,7 @@ interface KeyPadProps {
 const { Calculate, Delete, Reset } = CalculatorOperation;
 const { Plus, Minus, Dot, Divide, Multiply } = CalculatorSign;
 
-const digitsByOrder: KeyPadItem['value'][] = [
+const digitsByOrder: Array<KeyPadItem['value']> = [
     7,
     8,
     9,
@@ -34,12 +34,12 @@ const digitsByOrder: KeyPadItem['value'][] = [
     Divide,
     Multiply,
     Reset,
-    Calculate,
+    Calculate
 ];
 
 const keyPadItems = digitsByOrder.map((value) => getKeyPadItem(value));
 
-const KeyPad: FC<KeyPadProps> = ({ dispatch }) => {
+const KeyPad: React.FC<KeyPadProps> = ({ dispatch }) => {
     return (
         <StyledKeyPad>
             {keyPadItems.map(({ action, label, value, variant }, index) => {

@@ -9,7 +9,7 @@ import { useAppDispatch, useAppSelector } from '../../app/store';
 import { calculatorLabels, getLabel } from '../../utils/label';
 import { CalculatorSign } from '../../types/calculator';
 
-const Calculator = () => {
+const Calculator: React.FC = () => {
     const calculator = useAppSelector((state) => state.calculator);
     const dispatch = useAppDispatch();
 

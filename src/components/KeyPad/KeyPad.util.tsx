@@ -1,14 +1,20 @@
 import { getLabel } from '../../utils/label';
 
-import { CalculatorOperation, CalculatorSign, ValidInput } from '../../types/calculator';
+import {
+    CalculatorOperation,
+    CalculatorSign,
+    type ValidInput
+} from '../../types/calculator';
 
 import { calculatorSlice } from '../../app/calculatorSlice';
 
 import type { KeyProps } from '../Key';
 
-const { insertNumber, insertSign, deleteLastDigit, clearAll, calculate } = calculatorSlice.actions;
+const { insertNumber, insertSign, deleteLastDigit, clearAll, calculate } =
+    calculatorSlice.actions;
 
-type calculatorAction = typeof calculatorSlice.actions[keyof typeof calculatorSlice.actions];
+type calculatorAction =
+    (typeof calculatorSlice.actions)[keyof typeof calculatorSlice.actions];
 
 export interface KeyPadItem {
     value: ValidInput;
@@ -19,14 +25,16 @@ export interface KeyPadItem {
 
 export const getKeyPadItem = (value: KeyPadItem['value']): KeyPadItem => {
     return {
-        value: value,
+        value,
         label: getLabel(value),
         variant: getKeyVariant(value),
-        action: getKeyAction(value),
+        action: getKeyAction(value)
     };
 };
 
-export const getKeyVariant = (value: KeyPadItem['value']): KeyProps['variant'] => {
+export const getKeyVariant = (
+    value: KeyPadItem['value']
+): KeyProps['variant'] => {
     switch (value) {
         case CalculatorOperation.Calculate: {
             return 'primary';

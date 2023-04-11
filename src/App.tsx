@@ -9,7 +9,7 @@ import { ThemeProvider } from './providers/ThemeProvider';
 import Screen from './components/Screen';
 import Calculator from './components/Calculator';
 
-const App = () => {
+const App: React.FC = () => {
     return (
         <Provider store={store}>
             <ThemeProvider>

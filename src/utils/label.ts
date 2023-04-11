@@ -1,11 +1,14 @@
 import {
     CalculatorOperation,
     CalculatorSign,
-    ValidOperation,
-    ValidSign,
+    type ValidOperation,
+    type ValidSign
 } from '../types/calculator';
 
-export const calculatorLabels: Record<CalculatorOperation | CalculatorSign, string> = {
+export const calculatorLabels: Record<
+    CalculatorOperation | CalculatorSign,
+    string
+> = {
     [CalculatorSign.Plus]: '+',
     [CalculatorSign.Minus]: '-',
     [CalculatorSign.Multiply]: '×',
@@ -13,7 +16,7 @@ export const calculatorLabels: Record<CalculatorOperation | CalculatorSign, stri
     [CalculatorOperation.Calculate]: '=',
     [CalculatorSign.Dot]: '.',
     [CalculatorOperation.Delete]: 'del',
-    [CalculatorOperation.Reset]: 'reset',
+    [CalculatorOperation.Reset]: 'reset'
 };
 
 export const getLabel = (value: number | ValidSign | ValidOperation): string =>

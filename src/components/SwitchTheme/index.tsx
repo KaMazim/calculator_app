@@ -2,15 +2,22 @@ import React, { useEffect, useRef } from 'react';
 import { colorThemeSlice } from '../../app/colorThemeSlice';
 import { useAppDispatch, useAppSelector } from '../../app/store';
 
-import { CircleWrapper, Circle, LabelWrapper, StyledSwitchTheme } from './SwitchTheme.styled';
+import {
+    CircleWrapper,
+    Circle,
+    LabelWrapper,
+    StyledSwitchTheme
+} from './SwitchTheme.styled';
 
-const SwitchTheme = () => {
-    const { currentTheme, colorThemes } = useAppSelector((state) => state.colorTheme);
+const SwitchTheme: React.FC = () => {
+    const { currentTheme, colorThemes } = useAppSelector(
+        (state) => state.colorTheme
+    );
 
     const { setCurrentTheme } = colorThemeSlice.actions;
     const dispatch = useAppDispatch();
 
-    const shouldSumRef = useRef<boolean>(currentTheme > 0 ? false : true);
+    const shouldSumRef = useRef<boolean>(currentTheme === 0);
 
     useEffect(() => {
         const lastIndex = colorThemes.length - 1;
@@ -30,7 +37,9 @@ const SwitchTheme = () => {
                 <Circle
                     position={currentTheme}
                     onClick={() => {
-                        const newTheme = shouldSumRef.current ? currentTheme + 1 : currentTheme - 1;
+                        const newTheme = shouldSumRef.current
+                            ? currentTheme + 1
+                            : currentTheme - 1;
                         dispatch(setCurrentTheme(newTheme));
                     }}
                 />

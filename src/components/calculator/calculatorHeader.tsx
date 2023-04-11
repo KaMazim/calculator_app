@@ -34,7 +34,7 @@ const TextWrapper = styled.div`
     }
 `;
 
-const CalculatorHeader = () => {
+const CalculatorHeader: React.FC = () => {
     return (
         <StyledCalcHeader>
             <TextWrapper>

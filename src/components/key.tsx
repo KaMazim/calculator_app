@@ -1,6 +1,9 @@
-import styled, { css, Theme } from 'styled-components';
+import styled, { css, type Theme } from 'styled-components';
 
-export type KeyProps = { variant: keyof Theme['color']['key']; isText: boolean };
+export interface KeyProps {
+    variant: keyof Theme['color']['key'];
+    isText: boolean;
+}
 
 const Key = styled.button<KeyProps>`
     display: flex;
@@ -27,9 +30,9 @@ const Key = styled.button<KeyProps>`
 
     ${({
         theme: {
-            color: { key },
+            color: { key }
         },
-        variant,
+        variant
     }) => css`
         color: ${key[variant].text};
         background-color: ${key[variant].background};
